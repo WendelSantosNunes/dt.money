@@ -1,5 +1,5 @@
 import styled from'styled-components';
-import { darken} from 'polished'
+import { darken, transparentize} from 'polished'
 export const Container = styled.form`
     h2{
         color: var(--text-title);
@@ -53,37 +53,49 @@ export const TransactionTypeContainer = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 0.5rem;
+`
 
-    button{
-        height: 4rem;
-        border: 1px solid #d7d7d7;
-        border-radius:  0.25rem;
+interface RadioBoxProps {
+    isActive: boolean;
+    activeColor: 'green' | 'red';
+}
 
-        background-color: transparent;
+const colors = {
+    green: '#33cc95',
+    red: '#E52E4D'
+}
 
-        display: flex;
-        align-items: center;
-        justify-content: center;
+export const RadioBox = styled.button<RadioBoxProps>`
 
-        transition: border-color 0.2s;
+    height: 4rem;
+    border: 1px solid #d7d7d7;
+    border-radius:  0.25rem;
 
-        // Vamos deixar escuro a bordar do button
-        // Vamos baixar um pacote polished(yarn add polished)
-        // Esse pacote vai adicionar esse funcionalidades
-        &:hover{
-            border-color: ${darken(0.1,'#d7d7d7')};
-        }
+    background-color: ${(props) => props.isActive ? transparentize(0.9, colors[props.activeColor]):'transparent'};
 
-        img{
-            height: 20px;
-            width: 20px;
-        }
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-        span{
-            display: inline-block;
-            margin-left: 1rem;
-            font-size: 1rem;
-            color: var(--text-title);
-        }
+    transition: border-color 0.2s;
+
+    // Vamos deixar escuro a bordar do button
+    // Vamos baixar um pacote polished(yarn add polished)
+    // Esse pacote vai adicionar esse funcionalidades
+    &:hover{
+        border-color: ${darken(0.1,'#d7d7d7')};
     }
+
+    img{
+        height: 20px;
+        width: 20px;
+    }
+
+    span{
+        display: inline-block;
+        margin-left: 1rem;
+        font-size: 1rem;
+        color: var(--text-title);
+    }
+
 `
