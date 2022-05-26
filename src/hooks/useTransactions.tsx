@@ -1,5 +1,5 @@
-import {createContext, useEffect, useState, ReactNode} from 'react'
-import { api } from './services/api'
+import {createContext, useEffect, useState, ReactNode, useContext} from 'react'
+import { api } from '../services/api'
 
 interface Transacation {
     id: number,
@@ -31,9 +31,9 @@ interface TransacationContextData {
 // Omit<interface,variáveis que não quero ter ou obter>
 type TransacationInput = Omit<Transacation, 'id' | 'createdAt'>
 
-export const TransactionsContext = createContext<TransacationContextData>({} as TransacationContextData )
+const TransactionsContext = createContext<TransacationContextData>({} as TransacationContextData )
 
-export function TransactionsProvider({ children}: TransacationProviderProps ){
+export function TransactionsProvider({ children }: TransacationProviderProps ){
     const [transactions, setTransaction] = useState<Transacation[]>([])
 
     useEffect(()=> {
@@ -55,4 +55,10 @@ export function TransactionsProvider({ children}: TransacationProviderProps ){
             {children}
         </TransactionsContext.Provider>
     );
+}
+
+export function useTrasactions(){
+    const context = useContext(TransactionsContext)
+    
+    return context
 }
